@@ -11,12 +11,14 @@ public class Waypoint : MonoBehaviour
 
     #region Unity Methods
 
+#if UNITY_EDITOR
     private void OnValidate()
     {
         int index = transform.GetSiblingIndex() + 1;
         _ID = index;
         gameObject.name = $"Waypoint {index}";
     }
+#endif
 
     #endregion
 

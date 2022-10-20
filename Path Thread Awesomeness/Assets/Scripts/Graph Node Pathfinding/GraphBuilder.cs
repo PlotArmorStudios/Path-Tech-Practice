@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -9,13 +6,28 @@ using UnityEngine;
 /// </summary>
 public class GraphBuilder : MonoBehaviour
 {
+    #region Field
+
     [SerializeField] private float _pathDetectionRange = 6;
     static Graph<Waypoint> graph;
+
+    #endregion
+
+    #region Properties
+
+    public static Graph<Waypoint> Graph
+    {
+        get { return graph; }
+        set { graph = value; }
+    }
+
+    #endregion
+
+    #region Unity Methods
 
     /// <summary>
     /// Awake is called before Start
     ///
-    /// Note: Leave this method public to support automated grading
     /// </summary>
     public void Awake()
     {
@@ -32,15 +44,9 @@ public class GraphBuilder : MonoBehaviour
         GraphRebuilder.OnRebuildGraph -= BuildGraph;
     }
 
-    [ContextMenu("Build Graph")]
-    public async void BuildGraph()
-    {
-        // add nodes (all waypoints, including start and end) to graph
-        var waypoints = FindObjectsOfType<Waypoint>();
-        graph = new Graph<Waypoint>();
+    #endregion
 
-        await Build(waypoints);
-    }
+    #region Private Methods
 
     private async Task Build(Waypoint[] waypoints)
     {
@@ -67,15 +73,19 @@ public class GraphBuilder : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Gets and sets the graph
-    /// 
-    /// CAUTION: Set should only be used by the autograder
-    /// </summary>
-    /// <value>graph</value>
-    public static Graph<Waypoint> Graph
+    #endregion
+    
+    #region Public Methods
+
+    [ContextMenu("Build Graph")]
+    public async void BuildGraph()
     {
-        get { return graph; }
-        set { graph = value; }
+        // add nodes (all waypoints, including start and end) to graph
+        var waypoints = FindObjectsOfType<Waypoint>();
+        graph = new Graph<Waypoint>();
+
+        await Build(waypoints);
     }
+
+    #endregion
 }

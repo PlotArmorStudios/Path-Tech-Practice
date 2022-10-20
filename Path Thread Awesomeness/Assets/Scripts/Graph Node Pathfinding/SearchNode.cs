@@ -68,7 +68,7 @@ public class SearchNode<T> : IComparable
 
     #endregion
 
-    #region Methods
+    #region Public Methods
 
     /// <summary>
     /// Compares this instance to the provided object and
@@ -78,7 +78,6 @@ public class SearchNode<T> : IComparable
     /// <param name="obj">object to compare to</param>
     public int CompareTo(object obj)
     {
-        // instance is always greater than null
         if (obj == null)
         {
             return 1;
@@ -107,10 +106,6 @@ public class SearchNode<T> : IComparable
         }        
     }
 
-    /// <summary>
-    /// Converts search node to string
-    /// </summary>
-    /// <returns>string representation</returns>
     public override string ToString()
     {
         return distance.ToString();

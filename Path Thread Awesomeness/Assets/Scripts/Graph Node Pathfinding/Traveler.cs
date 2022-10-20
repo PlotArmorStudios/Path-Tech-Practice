@@ -112,6 +112,20 @@ public class Traveler : MonoBehaviour
 
         return path;
     }
+    
+    private void SetStartAndEndPoints()
+    {
+        _start = FindNearestWaypoint();
+
+        //Find random end point
+        var lastEndPoint = _end;
+
+        do
+        {
+            var randomEndPoint = Random.Range(0, _graph.Nodes.Count);
+            _end = _graph.Nodes[randomEndPoint].Value;
+        } while (_start == _end || _end == lastEndPoint);
+    }
 
     private string ConvertSearchListToString(SortedLinkedList<SearchNode<Waypoint>> searchList)
     {
@@ -167,19 +181,7 @@ public class Traveler : MonoBehaviour
         Debug.Log($"Async task took {elapsedTime} ms.");
     }
 
-    private void SetStartAndEndPoints()
-    {
-        _start = FindNearestWaypoint();
-
-        //Find random end point
-        var lastEndPoint = _end;
-
-        do
-        {
-            var randomEndPoint = Random.Range(0, _graph.Nodes.Count);
-            _end = _graph.Nodes[randomEndPoint].Value;
-        } while (_start == _end || _end == lastEndPoint);
-    }
+   
 
     public void UpdateTarget()
     {
@@ -194,16 +196,17 @@ public class Traveler : MonoBehaviour
 
     /// <summary>
     /// Does a search for a path from start to end on graph
+    /// 
     /// </summary>
     /// <param name="start">start value</param>
     /// <param name="finish">finish value</param>
     /// <param name="graph">graph to search</param>
     /// <returns>string for path or empty string if there is no path</returns>
-    public LinkedList<Waypoint> Search(Waypoint start, Waypoint end,
-        Graph<Waypoint> graph)
+    public LinkedList<Waypoint> Search(Waypoint start, Waypoint end, Graph<Waypoint> graph)
     {
         // Create a search list a sorted linked list of search nodes to sync waypoints with the graph's graph nodes
         SortedLinkedList<SearchNode<Waypoint>> waypoints = new SortedLinkedList<SearchNode<Waypoint>>();
+      
         Dictionary<GraphNode<Waypoint>, SearchNode<Waypoint>> searchNodes =
             new Dictionary<GraphNode<Waypoint>, SearchNode<Waypoint>>();
 
@@ -267,6 +270,4 @@ public class Traveler : MonoBehaviour
     }
 
     #endregion
-
-  
 }

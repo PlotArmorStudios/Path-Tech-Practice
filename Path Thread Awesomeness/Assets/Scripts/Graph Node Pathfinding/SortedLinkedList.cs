@@ -7,8 +7,12 @@ using System.Collections.Generic;
 /// </summary>
 public class SortedLinkedList<T> : LinkedList<T> where T : IComparable
 {
+    #region Fields
+
     private LinkedListNode<T> head;
     private int count;
+
+    #endregion
 
     #region Constructor
 
@@ -18,12 +22,8 @@ public class SortedLinkedList<T> : LinkedList<T> where T : IComparable
 
     #endregion
 
-    #region Methods
+    #region Public Methods
 
-    /// <summary>
-    /// Adds the given item to the list
-    /// </summary>
-    /// <param name="item">item to add to list</param>
     public void Add(T item)
     {
         // adding to empty list
@@ -31,29 +31,26 @@ public class SortedLinkedList<T> : LinkedList<T> where T : IComparable
         {
             AddFirst(item);
         }
-        else if (First.Value.CompareTo(item) >= 0) //if first search node distance value is equal to or greater than item node distance value
+        else if (First.Value.CompareTo(item) >= 0)
         {
             // adding before head
             AddFirst(item);
         }
         else
         {
-            // find place to add new node
             LinkedListNode<T> previousNode = null;
             LinkedListNode<T> currentNode = First;
 
             while (currentNode != null &&
-                   currentNode.Value.CompareTo(item) < 0) //if current node distance value is less than item node distance value
+                   currentNode.Value.CompareTo(item) < 0)
             {
                 previousNode = currentNode;
                 currentNode = currentNode.Next;
             }
 
-            // link in new node between previous node and current node
             AddAfter(previousNode, item);
         }
     }
-
 
     /// <summary>
     /// Repositions the given item in the list by moving it

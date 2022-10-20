@@ -17,11 +17,6 @@ public class GraphNode<T>
 
     #region Constructors
 
-    /// <summary>
-    /// Constructor
-    /// 
-    /// </summary>
-    /// <param name="value">value for the node</param>
     public GraphNode(T value)
     {
         this.value = value;
@@ -37,30 +32,18 @@ public class GraphNode<T>
     /// Gets the value stored in the node
     /// 
     /// </summary>
-    public T Value
-    {
-        get { return value; }
-    }
+    public T Value => value;
 
     /// <summary>
     /// Gets a read-only list of the neighbors of the node
+    /// 
     /// </summary>
-    public IList<GraphNode<T>> Neighbors
-    {
-        get { return neighbors.AsReadOnly(); }
-    }
+    public IList<GraphNode<T>> Neighbors => neighbors.AsReadOnly();
 
     #endregion
 
     #region Public Methods
 
-    /// <summary>
-    /// Adds the given node as a neighbor for this node
-    /// 
-    /// </summary>
-    /// <param name="neighbor">neighbor to add</param>
-    /// <param name="weight">weight of edge being added</param>
-    /// <returns>true if the neighbor was added, false otherwise</returns>
     public bool AddNeighbor(GraphNode<T> neighbor, float weight)
     {
         // don't add duplicate nodes
@@ -80,6 +63,7 @@ public class GraphNode<T>
     /// Gets the weight of the edge from this node to
     /// the given neighbor. If the edge doesn't exist,
     /// throws an InvalidOperationException
+    /// 
     /// </summary>
     /// <param name="neighbor">neighbor</param>
     /// <returns>weight of edge to neighbor</returns>
@@ -97,11 +81,6 @@ public class GraphNode<T>
         }
     }
 
-    /// <summary>
-    /// Removes the given node as a neighbor for this node
-    /// </summary>
-    /// <param name="neighbor">neighbor to remove</param>
-    /// <returns>true if the neighbor was removed, false otherwise</returns>
     public bool RemoveNeighbor(GraphNode<T> neighbor)
     {
         // remove weight for neighbor
@@ -120,10 +99,6 @@ public class GraphNode<T>
         }
     }
 
-    /// <summary>
-    /// Removes all the neighbors for the node
-    /// </summary>
-    /// <returns>true if the neighbors were removed, false otherwise</returns>
     public bool RemoveAllNeighbors()
     {
         for (int i = neighbors.Count - 1; i >= 0; i--)

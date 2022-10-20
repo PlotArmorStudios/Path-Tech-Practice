@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-/// <summary>
-/// A graph
-/// </summary>
-/// <typeparam name="T">type of values stored in graph</typeparam>
 public class Graph<T>
 {
     #region Fields
@@ -13,42 +8,16 @@ public class Graph<T>
 
     #endregion
 
-    #region Constructor
-
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    public Graph()
-    {
-    }
-
-    #endregion
-
     #region Properties
 
-    /// <summary>
-    /// Gets the number of nodes in the graph
-    /// </summary>
-    public int Count
-    {
-        get { return nodes.Count; }
-    }
+    public int Count => nodes.Count;
 
-    /// <summary>
-    /// Gets a read-only list of the nodes in the graph
-    /// </summary>
-    public IList<GraphNode<T>> Nodes
-    {
-        get { return nodes.AsReadOnly(); }
-    }
+    public IList<GraphNode<T>> Nodes => nodes.AsReadOnly();
 
     #endregion
 
-    #region Methods
+    #region Public Methods
 
-    /// <summary>
-    /// Clears all the nodes from the graph
-    /// </summary>
     public void Clear()
     {
         // remove all the neighbors from each node
@@ -65,13 +34,6 @@ public class Graph<T>
         }
     }
 
-    /// <summary>
-    /// Adds a node with the given value to the graph. If a node
-    /// with the same value is in the graph, the value 
-    /// isn't added and the method returns false
-    /// </summary>
-    /// <param name="value">value to add</param>
-    /// <returns>true if the value is added, false otherwise</returns>
     public bool AddNode(T value)
     {
         if (Find(value) != null)
@@ -86,13 +48,6 @@ public class Graph<T>
         }
     }
 
-    /// <summary>
-    /// Removes the node with the given value from the graph.
-    /// If the node isn't found in the graph, the method 
-    /// returns false
-    /// </summary>
-    /// <param name="value">value to remove</param>
-    /// <returns>true if the value is removed, false otherwise</returns>
     public bool RemoveNode(T value)
     {
         GraphNode<T> removeNode = Find(value);
@@ -113,14 +68,6 @@ public class Graph<T>
         }
     }
 
-    /// <summary>
-    /// Removes an edge between the nodes with the given values 
-    /// from the graph. If one or both of the values don't exist 
-    /// in the graph the method returns false
-    /// </summary>
-    /// <param name="value1">first value to disconnect</param>
-    /// <param name="value2">second value to disconnect</param>
-    /// <returns>true if the edge is removed, false otherwise</returns>
     public bool RemoveEdge(T value1, T value2)
     {
         GraphNode<T> node1 = Find(value1);
@@ -144,11 +91,6 @@ public class Graph<T>
         }
     }
 
-    /// <summary>
-    /// Finds the graph node with the given value
-    /// </summary>
-    /// <param name="value">value to find</param>
-    /// <returns>graph node or null if not found</returns>
     public GraphNode<T> Find(T value)
     {
         foreach (GraphNode<T> node in nodes)
