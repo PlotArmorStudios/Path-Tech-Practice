@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Draggable : MonoBehaviour
 {
@@ -25,6 +21,6 @@ public class Draggable : MonoBehaviour
 
     private void OnMouseUp()
     {
-        GraphRebuilder.RebuildGraph();
+        GraphBuilder.RebuildGraph();
     }
 }

@@ -17,7 +17,7 @@ public class MoveAllUnits : MonoBehaviour
         
         for (int i = 0; i < _units.Count; i++)
         {
-            _units[i].TestPathAsync();
+            _units[i].GeneratePathAsync();
         }
     }
 }

@@ -74,14 +74,15 @@ public class WaypointManager : MonoBehaviour
 
         ReorganizeWaypoints();
 
-        GraphRebuilder.RebuildGraph();
+        GraphBuilder.RebuildGraph();
     }
     
     public void AddWayPoint()
     {
         var waypoint = Instantiate(_waypointObject, transform.position, Quaternion.identity);
         waypoint.transform.parent = transform;
-        GraphRebuilder.RebuildGraph();
+        
+        GraphBuilder.RebuildGraph();
     }
     
     #endregion

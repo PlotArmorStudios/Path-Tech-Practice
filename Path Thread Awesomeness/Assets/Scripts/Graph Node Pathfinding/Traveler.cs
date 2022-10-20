@@ -65,8 +65,8 @@ public class Traveler : MonoBehaviour
     }
 
     #endregion
-    
-    #region Private methods
+
+    #region Private Methods
 
     private Waypoint FindNearestWaypoint()
     {
@@ -112,7 +112,7 @@ public class Traveler : MonoBehaviour
 
         return path;
     }
-    
+
     private void SetStartAndEndPoints()
     {
         _start = FindNearestWaypoint();
@@ -144,11 +144,11 @@ public class Traveler : MonoBehaviour
     }
 
     #endregion
-    
-    #region Public methods
+
+    #region Public Methods
 
     [ContextMenu("Test path")]
-    public async void TestPathAsync()
+    public async void GeneratePathAsync()
     {
         Stopwatch watch = new Stopwatch();
         watch.Start();
@@ -181,8 +181,6 @@ public class Traveler : MonoBehaviour
         Debug.Log($"Async task took {elapsedTime} ms.");
     }
 
-   
-
     public void UpdateTarget()
     {
         _target = _target.Next;
@@ -206,7 +204,7 @@ public class Traveler : MonoBehaviour
     {
         // Create a search list a sorted linked list of search nodes to sync waypoints with the graph's graph nodes
         SortedLinkedList<SearchNode<Waypoint>> waypoints = new SortedLinkedList<SearchNode<Waypoint>>();
-      
+
         Dictionary<GraphNode<Waypoint>, SearchNode<Waypoint>> searchNodes =
             new Dictionary<GraphNode<Waypoint>, SearchNode<Waypoint>>();
 
@@ -241,7 +239,6 @@ public class Traveler : MonoBehaviour
             {
                 return BuildWaypointPath(currentSearchNode);
             }
-
 
             // Calculate search node distances
             foreach (var neighbor in currentGraphNode.Neighbors)

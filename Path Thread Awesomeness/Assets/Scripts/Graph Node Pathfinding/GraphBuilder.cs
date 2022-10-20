@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 using UnityEngine;
 
 /// <summary>
@@ -6,7 +6,14 @@ using UnityEngine;
 /// </summary>
 public class GraphBuilder : MonoBehaviour
 {
-    #region Field
+    #region Evemts
+
+    public static event Action OnRebuildGraph;
+    public static event Action OnRebuildEdges;
+
+    #endregion
+
+    #region Fields
 
     [SerializeField] private float _pathDetectionRange = 6;
     static Graph<Waypoint> graph;
@@ -25,10 +32,6 @@ public class GraphBuilder : MonoBehaviour
 
     #region Unity Methods
 
-    /// <summary>
-    /// Awake is called before Start
-    ///
-    /// </summary>
     public void Awake()
     {
         BuildGraph();
@@ -36,19 +39,19 @@ public class GraphBuilder : MonoBehaviour
 
     private void OnEnable()
     {
-        GraphRebuilder.OnRebuildGraph += BuildGraph;
+        OnRebuildGraph += BuildGraph;
     }
 
     private void OnDisable()
     {
-        GraphRebuilder.OnRebuildGraph -= BuildGraph;
+        OnRebuildGraph -= BuildGraph;
     }
 
     #endregion
 
     #region Private Methods
 
-    private async Task Build(Waypoint[] waypoints)
+    private void Build(Waypoint[] waypoints)
     {
         foreach (var waypoint in waypoints)
         {
@@ -73,18 +76,34 @@ public class GraphBuilder : MonoBehaviour
         }
     }
 
+    private static void TriggerEdgeRebuild()
+    {
+        OnRebuildEdges?.Invoke();
+    }
+
+    private static void TriggerRebuildEvent()
+    {
+        OnRebuildGraph?.Invoke();
+    }
+
     #endregion
-    
+
     #region Public Methods
 
     [ContextMenu("Build Graph")]
-    public async void BuildGraph()
+    public void BuildGraph()
     {
         // add nodes (all waypoints, including start and end) to graph
         var waypoints = FindObjectsOfType<Waypoint>();
         graph = new Graph<Waypoint>();
 
-        await Build(waypoints);
+        Build(waypoints);
+    }
+
+    public static void RebuildGraph()
+    {
+        TriggerRebuildEvent();
+        TriggerEdgeRebuild();
     }
 
     #endregion

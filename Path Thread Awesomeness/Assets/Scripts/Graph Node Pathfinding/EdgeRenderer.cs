@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,11 +6,14 @@ using UnityEngine;
 /// </summary>
 public class EdgeRenderer : MonoBehaviour
 {
+    #region Fields
+
     static List<GameObject> lineRenderers;
 
-	/// <summary>
-	/// Use this for initialization
-	/// </summary>
+    #endregion
+
+    #region Unity Methods
+
     private void Start()
     {
         DrawLines();
@@ -21,24 +21,24 @@ public class EdgeRenderer : MonoBehaviour
 
     private void OnEnable()
     {
-        GraphRebuilder.OnRebuildEdges += RedrawLines;
+        GraphBuilder.OnRebuildEdges += RedrawLines;
     }
 
     private void OnDisable()
     {
-        GraphRebuilder.OnRebuildEdges -= RedrawLines;
+        GraphBuilder.OnRebuildEdges -= RedrawLines;
     }
 
-    public async void DrawLines()
-    {
-        // add a line renderer for each graph edge
-        lineRenderers = new List<GameObject>();
-        Graph<Waypoint> graph = GraphBuilder.Graph;
+    #endregion
 
-        await BuildLines(graph);
-    }
+    #region Private Methods
 
-    private async Task BuildLines(Graph<Waypoint> graph)
+    /// <summary>
+    /// Build line visuals based on the current graph.
+    /// 
+    /// </summary>
+    /// <param name="graph">the current graph. </param>
+    private void BuildLines(Graph<Waypoint> graph)
     {
         foreach (GraphNode<Waypoint> node in graph.Nodes)
         {
@@ -68,12 +68,21 @@ public class EdgeRenderer : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Stops drawing the graph edges
-    /// </summary>
-    public void StopDrawingEdges()
+    #endregion
+
+    #region Public Methods
+
+    public void DrawLines()
     {
-        // done drawing edges, so destroy all line renderers
+        // add a line renderer for each graph edge
+        lineRenderers = new List<GameObject>();
+        Graph<Waypoint> graph = GraphBuilder.Graph;
+
+        BuildLines(graph);
+    }
+
+    public void ClearLines()
+    {
         for (int i = lineRenderers.Count - 1; i >= 0; i--)
         {
             Destroy(lineRenderers[i]);
@@ -83,7 +92,9 @@ public class EdgeRenderer : MonoBehaviour
     [ContextMenu("Redraw Lines")]
     public void RedrawLines()
     {
-        StopDrawingEdges();
+        ClearLines();
         DrawLines();
     }
+
+    #endregion
 }
