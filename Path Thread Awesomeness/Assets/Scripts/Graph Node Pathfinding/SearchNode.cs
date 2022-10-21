@@ -8,9 +8,9 @@ public class SearchNode<T> : IComparable
 {
     #region Fields
 
-    GraphNode<T> graphNode;
-    float distance;
-    SearchNode<T> previous;
+    private float _distance;
+    GraphNode<T> _graphNode;
+    SearchNode<T> _previous;
 
     #endregion
 
@@ -24,9 +24,9 @@ public class SearchNode<T> : IComparable
     /// <param name="graphNode">graph node</param>
     public SearchNode(GraphNode<T> graphNode)
     {
-        this.graphNode = graphNode;
-        distance = float.MaxValue;
-        previous = null;
+        _graphNode = graphNode;
+        _distance = float.MaxValue;
+        _previous = null;
     }
 
     #endregion
@@ -39,7 +39,7 @@ public class SearchNode<T> : IComparable
     /// <value>graph node</value>
     public GraphNode<T> GraphNode
     {
-        get { return graphNode; }
+        get { return _graphNode; }
     }
 
     /// <summary>
@@ -48,8 +48,8 @@ public class SearchNode<T> : IComparable
     /// <value>distance</value>
     public float Distance
     {
-        get { return distance; }
-        set { distance = value; }
+        get { return _distance; }
+        set { _distance = value; }
     }
 
     /// <summary>
@@ -59,8 +59,8 @@ public class SearchNode<T> : IComparable
     /// <value>previous</value>
     public SearchNode<T> Previous
     {
-        get { return previous; }
-        set { previous = value; }
+        get { return _previous; }
+        set { _previous = value; }
     }
 
     #endregion
@@ -84,11 +84,11 @@ public class SearchNode<T> : IComparable
         SearchNode<T> otherSearchNode = obj as SearchNode<T>;
         if (otherSearchNode != null)
         {
-            if (distance < otherSearchNode.Distance)
+            if (_distance < otherSearchNode.Distance)
             {
                 return -1;
             }
-            else if (distance == otherSearchNode.Distance)
+            else if (_distance == otherSearchNode.Distance)
             {
                 return 0;
             }
@@ -105,7 +105,7 @@ public class SearchNode<T> : IComparable
 
     public override string ToString()
     {
-        return distance.ToString();
+        return _distance.ToString();
     }
 	
     #endregion

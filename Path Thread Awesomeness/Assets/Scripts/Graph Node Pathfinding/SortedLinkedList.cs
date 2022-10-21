@@ -9,16 +9,8 @@ public class SortedLinkedList<T> : LinkedList<T> where T : IComparable
 {
     #region Fields
 
-    private LinkedListNode<T> head;
-    private int count;
-
-    #endregion
-
-    #region Constructor
-
-    public SortedLinkedList() : base()
-    {
-    }
+    private LinkedListNode<T> _head;
+    private int _count;
 
     #endregion
 

@@ -4,15 +4,15 @@ public class Graph<T>
 {
     #region Fields
 
-    List<GraphNode<T>> nodes = new List<GraphNode<T>>();
+    private List<GraphNode<T>> _nodes = new List<GraphNode<T>>();
 
     #endregion
 
     #region Properties
 
-    public int Count => nodes.Count;
+    public int Count => _nodes.Count;
 
-    public IList<GraphNode<T>> Nodes => nodes.AsReadOnly();
+    public IList<GraphNode<T>> Nodes => _nodes.AsReadOnly();
 
     #endregion
 
@@ -22,15 +22,15 @@ public class Graph<T>
     {
         // remove all the neighbors from each node
         // so nodes can be garbage collected
-        foreach (GraphNode<T> node in nodes)
+        foreach (GraphNode<T> node in _nodes)
         {
             node.RemoveAllNeighbors();
         }
 
         // now remove all the nodes from the graph
-        for (int i = nodes.Count - 1; i >= 0; i--)
+        for (int i = _nodes.Count - 1; i >= 0; i--)
         {
-            nodes.RemoveAt(i);
+            _nodes.RemoveAt(i);
         }
     }
 
@@ -43,7 +43,7 @@ public class Graph<T>
         }
         else
         {
-            nodes.Add(new GraphNode<T>(value));
+            _nodes.Add(new GraphNode<T>(value));
             return true;
         }
     }
@@ -59,8 +59,8 @@ public class Graph<T>
         {
             // need to remove as neighor for all nodes
             // in graph
-            nodes.Remove(removeNode);
-            foreach (GraphNode<T> node in nodes)
+            _nodes.Remove(removeNode);
+            foreach (GraphNode<T> node in _nodes)
             {
                 node.RemoveNeighbor(removeNode);
             }
@@ -93,7 +93,7 @@ public class Graph<T>
 
     public GraphNode<T> Find(T value)
     {
-        foreach (GraphNode<T> node in nodes)
+        foreach (GraphNode<T> node in _nodes)
         {
             if (node.Value.Equals(value))
             {

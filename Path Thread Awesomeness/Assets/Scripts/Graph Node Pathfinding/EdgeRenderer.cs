@@ -8,7 +8,7 @@ public class EdgeRenderer : MonoBehaviour
 {
     #region Fields
 
-    static List<GameObject> lineRenderers;
+    private static List<GameObject> _lineRenderers;
 
     #endregion
 
@@ -48,7 +48,7 @@ public class EdgeRenderer : MonoBehaviour
                 GameObject lineObj = new GameObject("LineObj");
                 LineRenderer lineRenderer = lineObj.AddComponent<LineRenderer>();
                 lineRenderer.material = new Material(Shader.Find("Hidden/Internal-Colored"));
-                lineRenderers.Add(lineObj);
+                _lineRenderers.Add(lineObj);
 
                 //Set color
                 lineRenderer.startColor = Color.black;
@@ -75,7 +75,7 @@ public class EdgeRenderer : MonoBehaviour
     public void DrawLines()
     {
         // add a line renderer for each graph edge
-        lineRenderers = new List<GameObject>();
+        _lineRenderers = new List<GameObject>();
         Graph<Waypoint> graph = GraphBuilder.Graph;
 
         BuildLines(graph);
@@ -83,9 +83,9 @@ public class EdgeRenderer : MonoBehaviour
 
     public void ClearLines()
     {
-        for (int i = lineRenderers.Count - 1; i >= 0; i--)
+        for (int i = _lineRenderers.Count - 1; i >= 0; i--)
         {
-            Destroy(lineRenderers[i]);
+            Destroy(_lineRenderers[i]);
         }
     }
 

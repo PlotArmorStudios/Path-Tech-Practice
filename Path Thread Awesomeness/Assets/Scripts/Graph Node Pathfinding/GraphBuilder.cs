@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class GraphBuilder : MonoBehaviour
 {
-    #region Evemts
+    #region Events
 
     public static event Action OnRebuildGraph;
     public static event Action OnRebuildEdges;
@@ -16,7 +16,7 @@ public class GraphBuilder : MonoBehaviour
     #region Fields
 
     [SerializeField] private float _pathDetectionRange = 6;
-    static Graph<Waypoint> graph;
+    private static Graph<Waypoint> _graph;
 
     #endregion
 
@@ -24,8 +24,8 @@ public class GraphBuilder : MonoBehaviour
 
     public static Graph<Waypoint> Graph
     {
-        get { return graph; }
-        set { graph = value; }
+        get { return _graph; }
+        set { _graph = value; }
     }
 
     #endregion
@@ -55,22 +55,22 @@ public class GraphBuilder : MonoBehaviour
     {
         foreach (var waypoint in waypoints)
         {
-            graph.AddNode(waypoint);
+            _graph.AddNode(waypoint);
         }
 
         // add neighbors for each node in graph
-        for (int i = 0; i < graph.Nodes.Count; i++)
+        for (int i = 0; i < _graph.Nodes.Count; i++)
         {
             for (int j = 0; j < waypoints.Length; j++)
             {
-                var nodeDistance = Vector3.Distance(graph.Nodes[i].Value.transform.position,
-                    graph.Nodes[j].Value.transform.position);
+                var nodeDistance = Vector3.Distance(_graph.Nodes[i].Value.transform.position,
+                    _graph.Nodes[j].Value.transform.position);
 
                 bool correctNodeDistance = nodeDistance <= _pathDetectionRange;
 
                 if (correctNodeDistance)
                 {
-                    graph.Nodes[i].AddNeighbor(graph.Nodes[j], nodeDistance);
+                    _graph.Nodes[i].AddNeighbor(_graph.Nodes[j], nodeDistance);
                 }
             }
         }
@@ -95,7 +95,7 @@ public class GraphBuilder : MonoBehaviour
     {
         // add nodes (all waypoints, including start and end) to graph
         var waypoints = FindObjectsOfType<Waypoint>();
-        graph = new Graph<Waypoint>();
+        _graph = new Graph<Waypoint>();
 
         Build(waypoints);
     }

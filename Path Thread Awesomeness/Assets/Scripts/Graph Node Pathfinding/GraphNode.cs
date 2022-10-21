@@ -9,9 +9,9 @@ public class GraphNode<T>
 {
     #region Fields
 
-    T value;
-    List<GraphNode<T>> neighbors;
-    List<float> weights;
+    private T _value;
+    private List<GraphNode<T>> _neighbors;
+    private List<float> _weights;
 
     #endregion
 
@@ -19,9 +19,9 @@ public class GraphNode<T>
 
     public GraphNode(T value)
     {
-        this.value = value;
-        neighbors = new List<GraphNode<T>>();
-        weights = new List<float>();
+        _value = value;
+        _neighbors = new List<GraphNode<T>>();
+        _weights = new List<float>();
     }
 
     #endregion
@@ -32,13 +32,13 @@ public class GraphNode<T>
     /// Gets the value stored in the node
     /// 
     /// </summary>
-    public T Value => value;
+    public T Value => _value;
 
     /// <summary>
     /// Gets a read-only list of the neighbors of the node
     /// 
     /// </summary>
-    public IList<GraphNode<T>> Neighbors => neighbors.AsReadOnly();
+    public IList<GraphNode<T>> Neighbors => _neighbors.AsReadOnly();
 
     #endregion
 
@@ -47,14 +47,14 @@ public class GraphNode<T>
     public bool AddNeighbor(GraphNode<T> neighbor, float weight)
     {
         // don't add duplicate nodes
-        if (neighbors.Contains(neighbor))
+        if (_neighbors.Contains(neighbor))
         {
             return false;
         }
         else
         {
-            neighbors.Add(neighbor);
-            weights.Add(weight);
+            _neighbors.Add(neighbor);
+            _weights.Add(weight);
             return true;
         }
     }
@@ -70,21 +70,21 @@ public class GraphNode<T>
     public float GetEdgeWeight(GraphNode<T> neighbor)
     {
         // make sure edge exists
-        if (!neighbors.Contains(neighbor))
+        if (!_neighbors.Contains(neighbor))
         {
             throw new InvalidOperationException("Trying to retrieve weight of non-existent edge");
         }
         else
         {
-            int index = neighbors.IndexOf(neighbor);
-            return weights[index];
+            int index = _neighbors.IndexOf(neighbor);
+            return _weights[index];
         }
     }
 
     public bool RemoveNeighbor(GraphNode<T> neighbor)
     {
         // remove weight for neighbor
-        int index = neighbors.IndexOf(neighbor);
+        int index = _neighbors.IndexOf(neighbor);
         if (index == -1)
         {
             // neighbor not in list
@@ -93,19 +93,19 @@ public class GraphNode<T>
         else
         {
             // remove neighbor and edge weight
-            neighbors.RemoveAt(index);
-            weights.RemoveAt(index);
+            _neighbors.RemoveAt(index);
+            _weights.RemoveAt(index);
             return true;
         }
     }
 
     public bool RemoveAllNeighbors()
     {
-        for (int i = neighbors.Count - 1; i >= 0; i--)
+        for (int i = _neighbors.Count - 1; i >= 0; i--)
         {
-            neighbors.RemoveAt(i);
+            _neighbors.RemoveAt(i);
         }
-        weights.Clear();
+        _weights.Clear();
         return true;
     }
 

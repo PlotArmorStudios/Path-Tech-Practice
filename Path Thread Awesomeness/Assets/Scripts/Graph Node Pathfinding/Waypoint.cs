@@ -4,7 +4,7 @@ public class Waypoint : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField] int _ID;
+    [SerializeField] private int _ID;
     [SerializeField] private float _gizmoRadius = 1;
 
     #endregion
