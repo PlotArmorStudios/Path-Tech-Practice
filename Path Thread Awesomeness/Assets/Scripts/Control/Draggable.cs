@@ -3,7 +3,7 @@ using UnityEngine;
 public class Draggable : MonoBehaviour
 {
     [SerializeField] private LayerMask _layerMask;
-    float _mouseZCoordinate;
+    private float _mouseZCoordinate;
 
     private Vector3 GetMouseWorldPosition()
     {
@@ -18,7 +18,7 @@ public class Draggable : MonoBehaviour
     {
         transform.position = GetMouseWorldPosition();
     }
-
+    
     private void OnMouseUp()
     {
         GraphBuilder.RebuildGraph();

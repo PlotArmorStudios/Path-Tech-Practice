@@ -8,16 +8,21 @@ public class MoveAllUnits : MonoBehaviour
 
     private void Awake()
     {
-        _units = FindObjectsOfType<Traveler>().ToList();
+        CollectUnitsIntoList();
     }
 
     public void Move()
     {
-        _units = FindObjectsOfType<Traveler>().ToList();
-        
+        CollectUnitsIntoList();
+
         for (int i = 0; i < _units.Count; i++)
         {
             _units[i].GeneratePathAsync();
         }
+    }
+
+    private void CollectUnitsIntoList()
+    {
+        _units = FindObjectsOfType<Traveler>().ToList();
     }
 }
